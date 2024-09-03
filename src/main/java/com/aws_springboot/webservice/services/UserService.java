@@ -12,6 +12,8 @@ import com.aws_springboot.webservice.repositories.UserRepository;
 import com.aws_springboot.webservice.services.exceptions.DatabaseException;
 import com.aws_springboot.webservice.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 
@@ -43,10 +45,14 @@ public class UserService {
 	}
 
 	public User update(Integer id, User obj) {
-		User entity = userRepository.getReferenceById(id);
-		updateData(entity, obj);
-		entity = userRepository.save(entity);
-		return entity;
+		try {
+			User entity = userRepository.getReferenceById(id);
+			updateData(entity, obj);
+			entity = userRepository.save(entity);
+			return entity;
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
