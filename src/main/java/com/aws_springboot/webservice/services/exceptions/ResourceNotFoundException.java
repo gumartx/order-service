@@ -1,4 +1,4 @@
-package com.aws_springboot.webservice.entities.exceptions;
+package com.aws_springboot.webservice.services.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
