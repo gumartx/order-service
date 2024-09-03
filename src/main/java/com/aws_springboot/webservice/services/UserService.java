@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aws_springboot.webservice.entities.User;
+import com.aws_springboot.webservice.entities.exceptions.ResourceNotFoundException;
 import com.aws_springboot.webservice.repositories.UserRepository;
 
 @Service
@@ -20,7 +21,7 @@ public class UserService {
 	}
 	
 	public User findById(Integer id) {
-		User obj = userRepository.findById(id).get();
+		User obj = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		return obj;
 	}
 	
